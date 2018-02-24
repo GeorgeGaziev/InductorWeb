@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='ru'>
+	<head>
+		<title>Flask App</title>
+		<style type="text/css">
+			* {
+				font-family: sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Замена ФИО</h1>
+		<form method="post" id="form">
+			<label for="inp">Введите ФИО : </label>
+			<input type="text" id="inp" name="inputText" autofocus autocomplete="off">
+			<button>Обработать!</button>
+		</form>
+		<p id="process"></p>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script>
+			$('#form').on('submit', function(e){
+				var inputText = $('#inp').val();
+				e.preventDefault();
+				$.ajax({
+					url: 'http://127.0.0.1:5000/process',
+					data: {'inputText': inputText},
+					method: 'POST',
+					success: function(data) {
+						$('#inp').val('');
+						$('#process').html('Результат обработки: ' + data['outputText'])
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
